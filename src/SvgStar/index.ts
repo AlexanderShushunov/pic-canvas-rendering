@@ -1,1 +1,0 @@
-export { SvgStar } from "./SvgStar";

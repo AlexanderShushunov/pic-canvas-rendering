@@ -1,4 +1,4 @@
-import { Position } from "../Position";
+import { Position } from "../utils/Position";
 
 type Star = {
     draw(scale: number): void;

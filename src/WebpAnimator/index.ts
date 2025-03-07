@@ -1,0 +1,1 @@
+export { WebpAnimator } from "./WebpAnimator";

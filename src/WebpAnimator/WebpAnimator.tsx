@@ -1,8 +1,8 @@
 import { FC, useContext, useEffect } from "react";
-import { Animation } from "./Animation";
-import { generatePositionsAroundPoint } from "./generatePositionsAroundPoint";
-import { FPSContext } from "./FPS";
+import { Animation } from "../Animation";
+import { generatePositionsAroundPoint } from "../utils/generatePositionsAroundPoint";
 import { WebpStar } from "./WebpStar";
+import { FPSContext } from "../FPS";
 
 export const WebpAnimator: FC<{
     ctx: CanvasRenderingContext2D;

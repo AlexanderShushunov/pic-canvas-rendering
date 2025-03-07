@@ -1,8 +1,7 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
-import "./App.css";
 import { FpsProvider, FPS } from "./FPS";
-import { SvgAnimator } from "./SvgAnimator.tsx";
-import { WebpAnimator } from "./WebpAnimator.tsx";
+import { SvgAnimator } from "./SvgAnimator";
+import { WebpAnimator } from "./WebpAnimator";
 
 const canvasSize = 500;
 

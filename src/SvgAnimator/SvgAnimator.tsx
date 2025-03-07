@@ -1,8 +1,8 @@
 import { FC, useContext, useEffect } from "react";
-import { Animation } from "./Animation";
-import { generatePositionsAroundPoint } from "./generatePositionsAroundPoint";
+import { Animation } from "../Animation";
+import { generatePositionsAroundPoint } from "../utils/generatePositionsAroundPoint";
+import { FPSContext } from "../FPS";
 import { SvgStar } from "./SvgStar";
-import { FPSContext } from "./FPS";
 
 export const SvgAnimator: FC<{
     ctx: CanvasRenderingContext2D;

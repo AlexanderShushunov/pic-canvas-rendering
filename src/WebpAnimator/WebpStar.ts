@@ -1,5 +1,5 @@
-import { Position } from "../Position";
-import { loadImage } from "../loadImage.ts";
+import { Position } from "../utils/Position";
+import { loadImage } from "../utils/loadImage.ts";
 import webpSrc from "./star.webp";
 
 export class WebpStar {

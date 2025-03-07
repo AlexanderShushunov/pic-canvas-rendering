@@ -1,0 +1,1 @@
+export { SvgAnimator } from "./SvgAnimator";
