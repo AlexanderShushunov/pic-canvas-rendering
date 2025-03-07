@@ -1,14 +1,19 @@
-import { useEffect, useRef } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import "./App.css";
-import { Star } from "./Star";
-import { StatLoader } from "./StatLoader";
-import { Animation } from "./Animation";
-import { generatePositionsAroundPoint } from "./generatePositionsAroundPoint.ts";
+import { FpsProvider, FPS } from "./FPS";
+import { SvgAnimator } from "./SvgAnimator.tsx";
 
 const canvasSize = 500;
 
 function App() {
     const canvas = useRef<HTMLCanvasElement>(null);
+    const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
+    const [count, setCount] = useState(50000);
+
+    const handleCountChange = (event: FormEvent<HTMLInputElement>) => {
+        const value = parseInt((event.target as HTMLInputElement).value, 10);
+        setCount(value);
+    }
 
     useEffect(() => {
         if (!canvas.current) return;
@@ -16,40 +21,18 @@ function App() {
         canvas.current.width = canvasSize;
         canvas.current.height = canvasSize;
 
-        const ctx = canvas.current.getContext("2d");
-        if (!ctx) return;
-
-        StatLoader.loaded.then(() => {
-            const animation = new Animation({
-                positions: generatePositionsAroundPoint({
-                    center: { x: canvasSize / 2, y: canvasSize / 2 },
-                    radius: canvasSize / 2,
-                    count: 200,
-                }),
-                starCreator: (position) => new Star(
-                    position,
-                    canvasSize / 10,
-                    StatLoader.svgImage,
-                ),
-            });
-
-            const nextFrame = () => {
-                ctx.fillStyle = "#000";
-                ctx.fillRect(0, 0, canvasSize, canvasSize);
-                const isFinished = animation.tick(ctx, performance.now());
-                if (isFinished) {
-                    return;
-                }
-                requestAnimationFrame(nextFrame);
-            };
-            nextFrame();
-        });
-    });
+        setCtx(canvas.current.getContext("2d"));
+    }, []);
 
     return (
-        <>
+        <FpsProvider>
+            <label>Star count: <input value={count} onInput={handleCountChange} type="number" /></label>
+            <FPS />
             <canvas ref={canvas} />
-        </>
+            {ctx &&
+              <SvgAnimator ctx={ctx} size={canvasSize} count={count} />
+            }
+        </FpsProvider>
     );
 }
 

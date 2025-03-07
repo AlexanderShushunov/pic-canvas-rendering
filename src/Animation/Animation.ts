@@ -1,5 +1,8 @@
-import { Star } from "../Star";
 import { Position } from "../Position";
+
+type Star = {
+    draw(scale: number): void;
+};
 
 const doNotStart = -1;
 
@@ -27,7 +30,7 @@ export class Animation {
         this.startTimes = positions.map(() => Math.random() * (fullAnimationDuration - oneStarAnimationDuration));
     }
 
-    public tick(ctx: CanvasRenderingContext2D, time: number): boolean {
+    public tick(time: number): boolean {
         if (this.startTime === doNotStart) {
             this.startTime = time;
         }
@@ -42,11 +45,10 @@ export class Animation {
                 const progress = (currentAnimationTime - theStarStartTime) / this.oneStarAnimationDuration;
                 // The first half of animation time an image should increase its size and the second part - decrease.
                 const scale = 2 * (progress > 0.5 ? 1 - progress : progress);
-                star.draw(ctx, scale);
+                star.draw(scale);
             }
         });
 
         return currentAnimationTime > this.fullAnimationDuration;
-
     }
 }
