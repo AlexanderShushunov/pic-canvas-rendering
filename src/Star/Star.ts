@@ -1,8 +1,9 @@
+import { Position } from "../Position";
+
 export class Star {
 
     public constructor(
-        private readonly x: number,
-        private readonly y: number,
+        private readonly position: Position,
         private readonly radius: number,
         private readonly startImg: HTMLImageElement,
     ) {}
@@ -15,8 +16,8 @@ export class Star {
         const realRadius = this.radius * scale;
         ctx.drawImage(
             this.startImg,
-            this.x - realRadius / 2,
-            this.y - realRadius / 2,
+            this.position.x - realRadius / 2,
+            this.position.y - realRadius / 2,
             realRadius,
             realRadius,
         );

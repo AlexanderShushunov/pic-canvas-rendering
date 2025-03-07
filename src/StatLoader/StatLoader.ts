@@ -1,8 +1,8 @@
 import { loadImage } from "./loadImage.ts";
-import svgSrc from "./star.svg"
+import svgSrc from "./star.svg";
 
 export class StatLoader {
-    private static _svgImg: HTMLImageElement
+    private static _svgImg: HTMLImageElement;
     private static loaders: Promise<HTMLImageElement[]>;
 
     static {
@@ -15,7 +15,7 @@ export class StatLoader {
 
     static get loaded(): Promise<void> {
         return new Promise(
-            resolve => StatLoader.loaders.then(() => resolve())
+            resolve => StatLoader.loaders.then(() => resolve()),
         );
     }
 
