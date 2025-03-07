@@ -1,7 +1,16 @@
 .FPS {
     font-family: helvetica sans-serif;
     font-size: 20px;
-    width: 100px;
-    text-align: center;
-    border: darkgoldenrod 2px solid;
+    display: flex;
+    align-items: start;
 }
+ .current {
+     width: 100px;
+     text-align: center;
+     border: darkgoldenrod 2px solid;
+ }
+
+ .avg {
+     width: 100px;
+     text-align: center;
+ }

@@ -2,9 +2,9 @@ import { FC, useContext, useEffect } from "react";
 import { Animation } from "../Animation";
 import { generatePositionsAroundPoint } from "../utils/generatePositionsAroundPoint";
 import { FPSContext } from "../FPS";
-import { SvgStar } from "./SvgStar";
+import { SvgStar } from "../SvgAnimator";
 
-export const SvgAnimator: FC<{
+export const DoubleBufferingSvgAnimator: FC<{
     ctx: CanvasRenderingContext2D;
     size: number;
     count: number;
@@ -16,6 +16,13 @@ export const SvgAnimator: FC<{
     const { tick, reset } = useContext(FPSContext);
 
     useEffect(() => {
+        const buffer = document.createElement("canvas");
+        buffer.width = size;
+        buffer.height = size;
+        const bufferCtx = buffer.getContext("2d");
+        if (!bufferCtx) {
+            return;
+        }
         const animation = new Animation({
             positions: generatePositionsAroundPoint({
                 center: { x: size / 2, y: size / 2 },
@@ -25,23 +32,24 @@ export const SvgAnimator: FC<{
             starCreator: (position) => new SvgStar(
                 position,
                 size / 10,
-                ctx,
+                bufferCtx,
             ),
         });
 
         let rafId = 0;
         const nextFrame = () => {
-            ctx.fillStyle = "#000";
-            ctx.fillRect(0, 0, size, size);
+            bufferCtx.fillStyle = "#000";
+            bufferCtx.fillRect(0, 0, size, size);
             const isFinished = animation.tick(performance.now());
+            ctx.drawImage(buffer, 0, 0);
             tick();
             if (isFinished) {
                 return;
             }
             rafId = requestAnimationFrame(nextFrame);
         };
-        reset();
         nextFrame();
+        reset();
         return () => cancelAnimationFrame(rafId);
     }, [count, size, ctx, tick]);
 

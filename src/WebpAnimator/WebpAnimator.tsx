@@ -13,7 +13,7 @@ export const WebpAnimator: FC<{
     size,
     count,
 }) => {
-    const { tick } = useContext(FPSContext);
+    const { tick, reset } = useContext(FPSContext);
 
     useEffect(() => {
         const animation = new Animation({
@@ -40,8 +40,8 @@ export const WebpAnimator: FC<{
             }
             rafId = requestAnimationFrame(nextFrame);
         };
+        reset();
         nextFrame();
-
         return () => cancelAnimationFrame(rafId);
     }, [count, size, ctx, tick]);
 
