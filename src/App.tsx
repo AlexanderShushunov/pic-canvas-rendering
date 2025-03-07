@@ -2,18 +2,25 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import "./App.css";
 import { FpsProvider, FPS } from "./FPS";
 import { SvgAnimator } from "./SvgAnimator.tsx";
+import { WebpAnimator } from "./WebpAnimator.tsx";
 
 const canvasSize = 500;
 
 function App() {
     const canvas = useRef<HTMLCanvasElement>(null);
-    const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
+    const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
     const [count, setCount] = useState(50000);
+    const [animator, setAnimator] = useState<"svg" | "webp">("svg");
 
     const handleCountChange = (event: FormEvent<HTMLInputElement>) => {
         const value = parseInt((event.target as HTMLInputElement).value, 10);
         setCount(value);
-    }
+    };
+
+    const handleAnimatorChange = (event: FormEvent<HTMLSelectElement>) => {
+        const value = (event.target as HTMLSelectElement).value;
+        setAnimator(value as "svg" | "webp");
+    };
 
     useEffect(() => {
         if (!canvas.current) return;
@@ -24,14 +31,35 @@ function App() {
         setCtx(canvas.current.getContext("2d"));
     }, []);
 
+    const renderAnimator = () => {
+        if (!ctx) {
+            return null;
+        }
+        if (animator === "svg") {
+            return <SvgAnimator ctx={ctx} size={canvasSize} count={count} />;
+        }
+        if (animator === "webp") {
+            return <WebpAnimator ctx={ctx} size={canvasSize} count={count} />;
+        }
+    };
+
     return (
         <FpsProvider>
-            <label>Star count: <input value={count} onInput={handleCountChange} type="number" /></label>
+            <label>
+                Star count:
+                <input value={count} onInput={handleCountChange} type="number" />
+            </label>
+            <br />
+            <label>
+                Animator:
+                <select value={animator} onChange={handleAnimatorChange}>
+                    <option value="webp">Webp</option>
+                    <option value="svg">SVG</option>
+                </select>
+            </label>
             <FPS />
             <canvas ref={canvas} />
-            {ctx &&
-              <SvgAnimator ctx={ctx} size={canvasSize} count={count} />
-            }
+            {renderAnimator()}
         </FpsProvider>
     );
 }

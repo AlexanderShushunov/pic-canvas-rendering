@@ -1,0 +1,1 @@
+export { WebpStar } from "./WebpStar";
