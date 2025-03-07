@@ -3,6 +3,7 @@ import { FpsProvider, FPS } from "./FPS";
 import { SvgAnimator } from "./SvgAnimator";
 import { WebpAnimator } from "./WebpAnimator";
 import { DoubleBufferingSvgAnimator } from "./DoubleBufferingSvgAnimator";
+import { RoundSvgAnimator } from "./RoundSvgAnimator";
 
 const canvasSize = 500;
 
@@ -10,7 +11,7 @@ function App() {
     const canvas = useRef<HTMLCanvasElement>(null);
     const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
     const [count, setCount] = useState(50000);
-    const [animator, setAnimator] = useState<"svg" | "webp" | "doubleBuffering">("svg");
+    const [animator, setAnimator] = useState<"svg" | "webp" | "doubleBuffering" | "round">("svg");
 
     const handleCountChange = (event: FormEvent<HTMLInputElement>) => {
         const value = parseInt((event.target as HTMLInputElement).value, 10);
@@ -44,6 +45,9 @@ function App() {
         if (animator === "doubleBuffering") {
             return <DoubleBufferingSvgAnimator ctx={ctx} size={canvasSize} count={count} />;
         }
+        if (animator === "round") {
+            return <RoundSvgAnimator ctx={ctx} size={canvasSize} count={count} />;
+        }
     };
 
     return (
@@ -59,6 +63,7 @@ function App() {
                     <option value="webp">Webp</option>
                     <option value="svg">SVG</option>
                     <option value="doubleBuffering">Double Buffering</option>
+                    <option value="round">Round</option>
                 </select>
             </label>
             <FPS />
