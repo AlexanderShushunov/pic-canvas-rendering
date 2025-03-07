@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import "./App.css";
 import { Star } from "./Star";
+import { StatLoader } from "./StatLoader";
 
 const canvasSize = 500;
 
@@ -19,12 +20,10 @@ function App() {
         ctx.fillStyle = "#000";
         ctx.fillRect(0, 0, canvasSize, canvasSize);
 
-        const star = new Star(100, 100, 50);
-
-        // wait for the image to load
-        setTimeout(() => {
+        StatLoader.loaded.then(() => {
+            const star = new Star(100, 100, 50, StatLoader.svgImage);
             star.draw(ctx, 1);
-        }, 1000);
+        });
     });
 
     return (
