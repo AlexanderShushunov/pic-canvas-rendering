@@ -1,7 +1,9 @@
-# Check Drawing Performance in Canvas
+# Canvas Drawing Performance Comparison
 
-The code draws a lot of "stars" on the canvas. 
-We checked how different approaches affect performance:
-- Use SVG or PNG stars
-- Use pre-rendered stars
-- Use "double buffering" (draw on an offscreen canvas and then copy to the main canvas)
+This project tests the performance of drawing numerous scaled "stars"
+on a canvas. We evaluated different approaches:
+- **SVG source** – Worst performance.
+- **Integer values in draw functions** – No performance improvement over SVG.
+- **Double buffering** ("offscreen" canvas) – No performance improvement over SVG.
+- **Pre-rendered stars** – Significantly better than SVG.
+- **WEBP source** – Best performance.
