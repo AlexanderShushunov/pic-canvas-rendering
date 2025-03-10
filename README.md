@@ -1,6 +1,6 @@
 # Canvas Drawing Performance Comparison
 
-[Demo](https://pic-canvas-rendering.vercel.app/)
+[Demo](https://alexandershushunov.github.io/pic-canvas-rendering/)
 
 This project tests the performance of drawing numerous scaled "stars"
 on a canvas. We evaluated different approaches:
